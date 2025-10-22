@@ -34,15 +34,15 @@ export function AddButton({
 
 
 
+
+
     // TODO: Implement notebook creation when ready
-  };if (iconOnly) {return (
-      <>
+  };if (iconOnly) {return <>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant={variant}
-              size={size}
-              className={className}>
+            <Button variant={variant}
+          size={size}
+          className={className}>
 
               <Plus className="h-4 w-4" />
             </Button>
@@ -60,10 +60,10 @@ export function AddButton({
         </DropdownMenu>
 
         <AddSourceDialog
-          open={sourceDialogOpen}
-          onOpenChange={setSourceDialogOpen} />
+        open={sourceDialogOpen}
+        onOpenChange={setSourceDialogOpen} />
 
-      </>);
+      </>;
 
   }
 

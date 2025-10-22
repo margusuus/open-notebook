@@ -85,15 +85,15 @@ export const useNavigationStore = create<NavigationState>()(
 
 
 
+
+
             // Silently fail if sessionStorage is not available
-          }}, removeItem: (name: string) => {try {
-            sessionStorage.removeItem(name);
-          } catch {
+          }}, removeItem: (name: string) => {try {sessionStorage.removeItem(name);} catch {
+
+
 
 
 
             // Silently fail if sessionStorage is not available
           }} // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any }
-  )
-);
+      } as any }));
