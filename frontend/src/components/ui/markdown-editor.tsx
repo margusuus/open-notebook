@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import dynamic from 'next/dynamic'
-import { forwardRef } from 'react'
+import dynamic from 'next/dynamic';
+import { forwardRef } from 'react';
 
 const MDEditor = dynamic(
   () => import('@uiw/react-md-editor').then((mod) => mod.default),
   { ssr: false }
-)
+);
 
 export interface MarkdownEditorProps {
-  value?: string
-  onChange?: (value?: string) => void
-  placeholder?: string
-  height?: number
-  preview?: 'live' | 'edit' | 'preview'
-  hideToolbar?: boolean
-  className?: string
+  value?: string;
+  onChange?: (value?: string) => void;
+  placeholder?: string;
+  height?: number;
+  preview?: 'live' | 'edit' | 'preview';
+  hideToolbar?: boolean;
+  className?: string;
 }
 
 export const MarkdownEditor = forwardRef<HTMLDivElement, MarkdownEditorProps>(
@@ -29,13 +29,13 @@ export const MarkdownEditor = forwardRef<HTMLDivElement, MarkdownEditorProps>(
           height={height}
           hideToolbar={hideToolbar}
           textareaProps={{
-            placeholder: placeholder || 'Enter markdown...',
+            placeholder: placeholder || 'Enter markdown...'
           }}
-          data-color-mode="light"
-        />
-      </div>
-    )
-  }
-)
+          data-color-mode="light" />
 
-MarkdownEditor.displayName = 'MarkdownEditor'
+      </div>);
+
+  }
+);
+
+MarkdownEditor.displayName = 'MarkdownEditor';

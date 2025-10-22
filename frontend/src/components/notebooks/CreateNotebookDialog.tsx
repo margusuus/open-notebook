@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import {
   Dialog,
@@ -11,55 +11,55 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
-import { useCreateNotebook } from '@/lib/hooks/use-notebooks'
+  DialogTitle } from
+'@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { useCreateNotebook } from '@/lib/hooks/use-notebooks';
 
 const createNotebookSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  description: z.string().optional(),
-})
+  description: z.string().optional()
+});
 
-type CreateNotebookFormData = z.infer<typeof createNotebookSchema>
+type CreateNotebookFormData = z.infer<typeof createNotebookSchema>;
 
 interface CreateNotebookDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function CreateNotebookDialog({ open, onOpenChange }: CreateNotebookDialogProps) {
-  const createNotebook = useCreateNotebook()
+  const createNotebook = useCreateNotebook();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    reset,
+    reset
   } = useForm<CreateNotebookFormData>({
     resolver: zodResolver(createNotebookSchema),
     mode: 'onChange',
     defaultValues: {
       name: '',
-      description: '',
-    },
-  })
+      description: ''
+    }
+  });
 
-  const closeDialog = () => onOpenChange(false)
+  const closeDialog = () => onOpenChange(false);
 
   const onSubmit = async (data: CreateNotebookFormData) => {
-    await createNotebook.mutateAsync(data)
-    closeDialog()
-    reset()
-  }
+    await createNotebook.mutateAsync(data);
+    closeDialog();
+    reset();
+  };
 
   useEffect(() => {
     if (!open) {
-      reset()
+      reset();
     }
-  }, [open, reset])
+  }, [open, reset]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -78,11 +78,11 @@ export function CreateNotebookDialog({ open, onOpenChange }: CreateNotebookDialo
               id="notebook-name"
               {...register('name')}
               placeholder="Enter notebook name"
-              autoFocus
-            />
-            {errors.name && (
-              <p className="text-sm text-destructive">{errors.name.message}</p>
-            )}
+              autoFocus />
+
+            {errors.name &&
+            <p className="text-sm text-destructive">{errors.name.message}</p>
+            }
           </div>
 
           <div className="space-y-2">
@@ -91,8 +91,8 @@ export function CreateNotebookDialog({ open, onOpenChange }: CreateNotebookDialo
               id="notebook-description"
               {...register('description')}
               placeholder="Describe the purpose and scope of this notebook..."
-              rows={4}
-            />
+              rows={4} />
+
           </div>
 
           <DialogFooter className="gap-2 sm:gap-0">
@@ -105,6 +105,6 @@ export function CreateNotebookDialog({ open, onOpenChange }: CreateNotebookDialo
           </DialogFooter>
         </form>
       </DialogContent>
-    </Dialog>
-  )
+    </Dialog>);
+
 }

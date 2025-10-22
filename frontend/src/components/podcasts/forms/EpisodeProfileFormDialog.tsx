@@ -1,35 +1,35 @@
-'use client'
+'use client';
 
-import { useCallback, useEffect, useMemo } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { useCallback, useEffect, useMemo } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-import { EpisodeProfile, SpeakerProfile } from '@/lib/types/podcasts'
+import { EpisodeProfile, SpeakerProfile } from '@/lib/types/podcasts';
 import {
   useCreateEpisodeProfile,
-  useUpdateEpisodeProfile,
-} from '@/lib/hooks/use-podcasts'
+  useUpdateEpisodeProfile } from
+'@/lib/hooks/use-podcasts';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+  DialogTitle } from
+'@/components/ui/dialog';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
-import { Separator } from '@/components/ui/separator'
+  SelectValue } from
+'@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Separator } from '@/components/ui/separator';
 
 const episodeProfileSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -40,21 +40,21 @@ const episodeProfileSchema = z.object({
   transcript_provider: z.string().min(1, 'Transcript provider is required'),
   transcript_model: z.string().min(1, 'Transcript model is required'),
   default_briefing: z.string().min(1, 'Default briefing is required'),
-  num_segments: z.number()
-    .int('Must be an integer')
-    .min(3, 'At least 3 segments')
-    .max(20, 'Maximum 20 segments'),
-})
+  num_segments: z.number().
+  int('Must be an integer').
+  min(3, 'At least 3 segments').
+  max(20, 'Maximum 20 segments')
+});
 
-export type EpisodeProfileFormValues = z.infer<typeof episodeProfileSchema>
+export type EpisodeProfileFormValues = z.infer<typeof episodeProfileSchema>;
 
 interface EpisodeProfileFormDialogProps {
-  mode: 'create' | 'edit'
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  speakerProfiles: SpeakerProfile[]
-  modelOptions: Record<string, string[]>
-  initialData?: EpisodeProfile
+  mode: 'create' | 'edit';
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  speakerProfiles: SpeakerProfile[];
+  modelOptions: Record<string, string[]>;
+  initialData?: EpisodeProfile;
 }
 
 export function EpisodeProfileFormDialog({
@@ -63,17 +63,17 @@ export function EpisodeProfileFormDialog({
   onOpenChange,
   speakerProfiles,
   modelOptions,
-  initialData,
+  initialData
 }: EpisodeProfileFormDialogProps) {
-  const createProfile = useCreateEpisodeProfile()
-  const updateProfile = useUpdateEpisodeProfile()
+  const createProfile = useCreateEpisodeProfile();
+  const updateProfile = useUpdateEpisodeProfile();
 
-  const providers = useMemo(() => Object.keys(modelOptions), [modelOptions])
+  const providers = useMemo(() => Object.keys(modelOptions), [modelOptions]);
 
   const getDefaults = useCallback((): EpisodeProfileFormValues => {
-    const firstSpeaker = speakerProfiles[0]?.name ?? ''
-    const firstProvider = providers[0] ?? ''
-    const firstModel = firstProvider ? modelOptions[firstProvider]?.[0] ?? '' : ''
+    const firstSpeaker = speakerProfiles[0]?.name ?? '';
+    const firstProvider = providers[0] ?? '';
+    const firstModel = firstProvider ? modelOptions[firstProvider]?.[0] ?? '' : '';
 
     if (initialData) {
       return {
@@ -85,8 +85,8 @@ export function EpisodeProfileFormDialog({
         transcript_provider: initialData.transcript_provider,
         transcript_model: initialData.transcript_model,
         default_briefing: initialData.default_briefing,
-        num_segments: initialData.num_segments,
-      }
+        num_segments: initialData.num_segments
+      };
     }
 
     return {
@@ -98,9 +98,9 @@ export function EpisodeProfileFormDialog({
       transcript_provider: firstProvider,
       transcript_model: firstModel,
       default_briefing: '',
-      num_segments: 5,
-    }
-  }, [initialData, modelOptions, providers, speakerProfiles])
+      num_segments: 5
+    };
+  }, [initialData, modelOptions, providers, speakerProfiles]);
 
   const {
     control,
@@ -109,76 +109,76 @@ export function EpisodeProfileFormDialog({
     reset,
     setValue,
     watch,
-    formState: { errors },
+    formState: { errors }
   } = useForm<EpisodeProfileFormValues>({
     resolver: zodResolver(episodeProfileSchema),
-    defaultValues: getDefaults(),
-  })
+    defaultValues: getDefaults()
+  });
 
-  const outlineProvider = watch('outline_provider')
-  const outlineModel = watch('outline_model')
-  const transcriptProvider = watch('transcript_provider')
-  const transcriptModel = watch('transcript_model')
-  const availableOutlineModels = modelOptions[outlineProvider] ?? []
-  const availableTranscriptModels = modelOptions[transcriptProvider] ?? []
+  const outlineProvider = watch('outline_provider');
+  const outlineModel = watch('outline_model');
+  const transcriptProvider = watch('transcript_provider');
+  const transcriptModel = watch('transcript_model');
+  const availableOutlineModels = modelOptions[outlineProvider] ?? [];
+  const availableTranscriptModels = modelOptions[transcriptProvider] ?? [];
 
   useEffect(() => {
     if (!open) {
-      return
+      return;
     }
-    reset(getDefaults())
-  }, [open, reset, getDefaults])
+    reset(getDefaults());
+  }, [open, reset, getDefaults]);
 
   useEffect(() => {
     if (!outlineProvider) {
-      return
+      return;
     }
-    const models = modelOptions[outlineProvider] ?? []
+    const models = modelOptions[outlineProvider] ?? [];
     if (models.length === 0) {
-      setValue('outline_model', '')
-      return
+      setValue('outline_model', '');
+      return;
     }
     if (!models.includes(outlineModel)) {
-      setValue('outline_model', models[0])
+      setValue('outline_model', models[0]);
     }
-  }, [outlineProvider, outlineModel, modelOptions, setValue])
+  }, [outlineProvider, outlineModel, modelOptions, setValue]);
 
   useEffect(() => {
     if (!transcriptProvider) {
-      return
+      return;
     }
-    const models = modelOptions[transcriptProvider] ?? []
+    const models = modelOptions[transcriptProvider] ?? [];
     if (models.length === 0) {
-      setValue('transcript_model', '')
-      return
+      setValue('transcript_model', '');
+      return;
     }
     if (!models.includes(transcriptModel)) {
-      setValue('transcript_model', models[0])
+      setValue('transcript_model', models[0]);
     }
-  }, [transcriptProvider, transcriptModel, modelOptions, setValue])
+  }, [transcriptProvider, transcriptModel, modelOptions, setValue]);
 
   const onSubmit = async (values: EpisodeProfileFormValues) => {
     const payload = {
       ...values,
-      description: values.description ?? '',
-    }
+      description: values.description ?? ''
+    };
 
     if (mode === 'create') {
-      await createProfile.mutateAsync(payload)
+      await createProfile.mutateAsync(payload);
     } else if (initialData) {
       await updateProfile.mutateAsync({
         profileId: initialData.id,
-        payload,
-      })
+        payload
+      });
     }
 
-    onOpenChange(false)
-  }
+    onOpenChange(false);
+  };
 
-  const isSubmitting = createProfile.isPending || updateProfile.isPending
+  const isSubmitting = createProfile.isPending || updateProfile.isPending;
   const disableSubmit =
-    isSubmitting || speakerProfiles.length === 0 || providers.length === 0
-  const isEdit = mode === 'edit'
+  isSubmitting || speakerProfiles.length === 0 || providers.length === 0;
+  const isEdit = mode === 'edit';
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -193,33 +193,33 @@ export function EpisodeProfileFormDialog({
           </DialogDescription>
         </DialogHeader>
 
-        {speakerProfiles.length === 0 ? (
-          <Alert className="bg-amber-50 text-amber-900">
+        {speakerProfiles.length === 0 ?
+        <Alert className="bg-amber-50 text-amber-900">
             <AlertTitle>No speaker profiles available</AlertTitle>
             <AlertDescription>
               Create a speaker profile before configuring an episode profile.
             </AlertDescription>
-          </Alert>
-        ) : null}
+          </Alert> :
+        null}
 
-        {providers.length === 0 ? (
-          <Alert className="bg-amber-50 text-amber-900">
+        {providers.length === 0 ?
+        <Alert className="bg-amber-50 text-amber-900">
             <AlertTitle>No language models available</AlertTitle>
             <AlertDescription>
               Add language models in the Models section to configure outline and transcript
               generation.
             </AlertDescription>
-          </Alert>
-        ) : null}
+          </Alert> :
+        null}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pt-2">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="name">Profile name *</Label>
               <Input id="name" placeholder="Tech discussion" {...register('name')} />
-              {errors.name ? (
-                <p className="text-xs text-red-600">{errors.name.message}</p>
-              ) : null}
+              {errors.name ?
+              <p className="text-xs text-red-600">{errors.name.message}</p> :
+              null}
             </div>
 
             <div className="space-y-2">
@@ -229,11 +229,11 @@ export function EpisodeProfileFormDialog({
                 type="number"
                 min={3}
                 max={20}
-                {...register('num_segments', { valueAsNumber: true })}
-              />
-              {errors.num_segments ? (
-                <p className="text-xs text-red-600">{errors.num_segments.message}</p>
-              ) : null}
+                {...register('num_segments', { valueAsNumber: true })} />
+
+              {errors.num_segments ?
+              <p className="text-xs text-red-600">{errors.num_segments.message}</p> :
+              null}
             </div>
 
             <div className="md:col-span-2 space-y-2">
@@ -242,8 +242,8 @@ export function EpisodeProfileFormDialog({
                 id="description"
                 rows={3}
                 placeholder="Short summary of when to use this profile"
-                {...register('description')}
-              />
+                {...register('description')} />
+
             </div>
           </div>
 
@@ -257,29 +257,29 @@ export function EpisodeProfileFormDialog({
             <Controller
               control={control}
               name="speaker_config"
-              render={({ field }) => (
-                <div className="space-y-2">
+              render={({ field }) =>
+              <div className="space-y-2">
                   <Label>Speaker profile *</Label>
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a speaker profile" />
                     </SelectTrigger>
                     <SelectContent>
-                      {speakerProfiles.map((profile) => (
-                        <SelectItem key={profile.id} value={profile.name}>
+                      {speakerProfiles.map((profile) =>
+                    <SelectItem key={profile.id} value={profile.name}>
                           {profile.name}
                         </SelectItem>
-                      ))}
+                    )}
                     </SelectContent>
                   </Select>
-                  {errors.speaker_config ? (
-                    <p className="text-xs text-red-600">
+                  {errors.speaker_config ?
+                <p className="text-xs text-red-600">
                       {errors.speaker_config.message}
-                    </p>
-                  ) : null}
+                    </p> :
+                null}
                 </div>
-              )}
-            />
+              } />
+
           </div>
 
           <div className="space-y-4">
@@ -293,56 +293,56 @@ export function EpisodeProfileFormDialog({
               <Controller
                 control={control}
                 name="outline_provider"
-                render={({ field }) => (
-                  <div className="space-y-2">
+                render={({ field }) =>
+                <div className="space-y-2">
                     <Label>Provider *</Label>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select provider" />
                       </SelectTrigger>
                       <SelectContent>
-                        {providers.map((provider) => (
-                          <SelectItem key={provider} value={provider}>
+                        {providers.map((provider) =>
+                      <SelectItem key={provider} value={provider}>
                             <span className="capitalize">{provider}</span>
                           </SelectItem>
-                        ))}
+                      )}
                       </SelectContent>
                     </Select>
-                    {errors.outline_provider ? (
-                      <p className="text-xs text-red-600">
+                    {errors.outline_provider ?
+                  <p className="text-xs text-red-600">
                         {errors.outline_provider.message}
-                      </p>
-                    ) : null}
+                      </p> :
+                  null}
                   </div>
-                )}
-              />
+                } />
+
 
               <Controller
                 control={control}
                 name="outline_model"
-                render={({ field }) => (
-                  <div className="space-y-2">
+                render={({ field }) =>
+                <div className="space-y-2">
                     <Label>Model *</Label>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select model" />
                       </SelectTrigger>
                       <SelectContent>
-                        {availableOutlineModels.map((model) => (
-                          <SelectItem key={model} value={model}>
+                        {availableOutlineModels.map((model) =>
+                      <SelectItem key={model} value={model}>
                             {model}
                           </SelectItem>
-                        ))}
+                      )}
                       </SelectContent>
                     </Select>
-                    {errors.outline_model ? (
-                      <p className="text-xs text-red-600">
+                    {errors.outline_model ?
+                  <p className="text-xs text-red-600">
                         {errors.outline_model.message}
-                      </p>
-                    ) : null}
+                      </p> :
+                  null}
                   </div>
-                )}
-              />
+                } />
+
             </div>
           </div>
 
@@ -357,56 +357,56 @@ export function EpisodeProfileFormDialog({
               <Controller
                 control={control}
                 name="transcript_provider"
-                render={({ field }) => (
-                  <div className="space-y-2">
+                render={({ field }) =>
+                <div className="space-y-2">
                     <Label>Provider *</Label>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select provider" />
                       </SelectTrigger>
                       <SelectContent>
-                        {providers.map((provider) => (
-                          <SelectItem key={provider} value={provider}>
+                        {providers.map((provider) =>
+                      <SelectItem key={provider} value={provider}>
                             <span className="capitalize">{provider}</span>
                           </SelectItem>
-                        ))}
+                      )}
                       </SelectContent>
                     </Select>
-                    {errors.transcript_provider ? (
-                      <p className="text-xs text-red-600">
+                    {errors.transcript_provider ?
+                  <p className="text-xs text-red-600">
                         {errors.transcript_provider.message}
-                      </p>
-                    ) : null}
+                      </p> :
+                  null}
                   </div>
-                )}
-              />
+                } />
+
 
               <Controller
                 control={control}
                 name="transcript_model"
-                render={({ field }) => (
-                  <div className="space-y-2">
+                render={({ field }) =>
+                <div className="space-y-2">
                     <Label>Model *</Label>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select model" />
                       </SelectTrigger>
                       <SelectContent>
-                        {availableTranscriptModels.map((model) => (
-                          <SelectItem key={model} value={model}>
+                        {availableTranscriptModels.map((model) =>
+                      <SelectItem key={model} value={model}>
                             {model}
                           </SelectItem>
-                        ))}
+                      )}
                       </SelectContent>
                     </Select>
-                    {errors.transcript_model ? (
-                      <p className="text-xs text-red-600">
+                    {errors.transcript_model ?
+                  <p className="text-xs text-red-600">
                         {errors.transcript_model.message}
-                      </p>
-                    ) : null}
+                      </p> :
+                  null}
                   </div>
-                )}
-              />
+                } />
+
             </div>
           </div>
 
@@ -416,35 +416,35 @@ export function EpisodeProfileFormDialog({
               id="default_briefing"
               rows={6}
               placeholder="Outline the structure, tone, and goals for this episode format"
-              {...register('default_briefing')}
-            />
-            {errors.default_briefing ? (
-              <p className="text-xs text-red-600">
+              {...register('default_briefing')} />
+
+            {errors.default_briefing ?
+            <p className="text-xs text-red-600">
                 {errors.default_briefing.message}
-              </p>
-            ) : null}
+              </p> :
+            null}
           </div>
 
           <div className="flex justify-end gap-2 pt-2">
             <Button
               type="button"
               variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
+              onClick={() => onOpenChange(false)}>
+
               Cancel
             </Button>
             <Button type="submit" disabled={disableSubmit}>
-              {isSubmitting
-                ? isEdit
-                  ? 'Saving…'
-                  : 'Creating…'
-                : isEdit
-                  ? 'Save changes'
-                  : 'Create profile'}
+              {isSubmitting ?
+              isEdit ?
+              'Saving…' :
+              'Creating…' :
+              isEdit ?
+              'Save changes' :
+              'Create profile'}
             </Button>
           </div>
         </form>
       </DialogContent>
-    </Dialog>
-  )
+    </Dialog>);
+
 }

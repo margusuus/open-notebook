@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import { useModalManager } from '@/lib/hooks/use-modal-manager'
-import { NoteEditorDialog } from '@/app/(dashboard)/notebooks/components/NoteEditorDialog'
-import { SourceInsightDialog } from '@/components/source/SourceInsightDialog'
-import { SourceDialog } from '@/components/source/SourceDialog'
+import { useModalManager } from '@/lib/hooks/use-modal-manager';
+import { NoteEditorDialog } from '@/app/(dashboard)/notebooks/components/NoteEditorDialog';
+import { SourceInsightDialog } from '@/components/source/SourceInsightDialog';
+import { SourceDialog } from '@/components/source/SourceDialog';
 
 /**
  * Modal Provider Component
@@ -17,7 +17,7 @@ import { SourceDialog } from '@/components/source/SourceDialog'
  * - insight: Source insight modal
  */
 export function ModalProvider() {
-  const { modalType, modalId, closeModal } = useModalManager()
+  const { modalType, modalId, closeModal } = useModalManager();
 
   return (
     <>
@@ -25,29 +25,29 @@ export function ModalProvider() {
       <SourceDialog
         open={modalType === 'source'}
         onOpenChange={(open) => {
-          if (!open) closeModal()
+          if (!open) closeModal();
         }}
-        sourceId={modalId}
-      />
+        sourceId={modalId} />
+
 
       {/* Note Modal */}
       <NoteEditorDialog
         open={modalType === 'note'}
         onOpenChange={(open) => {
-          if (!open) closeModal()
+          if (!open) closeModal();
         }}
         notebookId="" // Will need to be fetched or handled in Phase 9
-        note={modalId ? { id: modalId, title: null, content: null } : undefined}
-      />
+        note={modalId ? { id: modalId, title: null, content: null } : undefined} />
+
 
       {/* Source Insight Modal */}
       <SourceInsightDialog
         open={modalType === 'insight'}
         onOpenChange={(open) => {
-          if (!open) closeModal()
+          if (!open) closeModal();
         }}
-        insight={modalId ? { id: modalId, insight_type: '', content: '' } : undefined}
-      />
-    </>
-  )
+        insight={modalId ? { id: modalId, insight_type: '', content: '' } : undefined} />
+
+    </>);
+
 }

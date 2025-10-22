@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import { useMemo, useState } from 'react'
-import { Copy, Edit3, MoreVertical, Trash2, Users } from 'lucide-react'
+import { useMemo, useState } from 'react';
+import { Copy, Edit3, MoreVertical, Trash2, Users } from 'lucide-react';
 
-import { EpisodeProfile, SpeakerProfile } from '@/lib/types/podcasts'
+import { EpisodeProfile, SpeakerProfile } from '@/lib/types/podcasts';
 import {
   useDeleteEpisodeProfile,
-  useDuplicateEpisodeProfile,
-} from '@/lib/hooks/use-podcasts'
-import { EpisodeProfileFormDialog } from '@/components/podcasts/forms/EpisodeProfileFormDialog'
+  useDuplicateEpisodeProfile } from
+'@/lib/hooks/use-podcasts';
+import { EpisodeProfileFormDialog } from '@/components/podcasts/forms/EpisodeProfileFormDialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,56 +18,56 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+  AlertDialogTrigger } from
+'@/components/ui/alert-dialog';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+  CardTitle } from
+'@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+  DropdownMenuTrigger } from
+'@/components/ui/dropdown-menu';
 
 interface EpisodeProfilesPanelProps {
-  episodeProfiles: EpisodeProfile[]
-  speakerProfiles: SpeakerProfile[]
-  modelOptions: Record<string, string[]>
+  episodeProfiles: EpisodeProfile[];
+  speakerProfiles: SpeakerProfile[];
+  modelOptions: Record<string, string[]>;
 }
 
 function findSpeakerSummary(
-  speakerProfiles: SpeakerProfile[],
-  speakerName: string
-) {
-  return speakerProfiles.find((profile) => profile.name === speakerName)
+speakerProfiles: SpeakerProfile[],
+speakerName: string)
+{
+  return speakerProfiles.find((profile) => profile.name === speakerName);
 }
 
 export function EpisodeProfilesPanel({
   episodeProfiles,
   speakerProfiles,
-  modelOptions,
+  modelOptions
 }: EpisodeProfilesPanelProps) {
-  const [createOpen, setCreateOpen] = useState(false)
-  const [editProfile, setEditProfile] = useState<EpisodeProfile | null>(null)
+  const [createOpen, setCreateOpen] = useState(false);
+  const [editProfile, setEditProfile] = useState<EpisodeProfile | null>(null);
 
-  const deleteProfile = useDeleteEpisodeProfile()
-  const duplicateProfile = useDuplicateEpisodeProfile()
+  const deleteProfile = useDeleteEpisodeProfile();
+  const duplicateProfile = useDuplicateEpisodeProfile();
 
   const sortedProfiles = useMemo(
     () =>
-      [...episodeProfiles].sort((a, b) => a.name.localeCompare(b.name, 'en')), 
+    [...episodeProfiles].sort((a, b) => a.name.localeCompare(b.name, 'en')),
     [episodeProfiles]
-  )
+  );
 
-  const disableCreate = speakerProfiles.length === 0
+  const disableCreate = speakerProfiles.length === 0;
 
   return (
     <div className="space-y-6">
@@ -83,26 +83,26 @@ export function EpisodeProfilesPanel({
         </Button>
       </div>
 
-      {disableCreate ? (
-        <p className="rounded-lg border border-dashed bg-amber-50 p-4 text-sm text-amber-900">
+      {disableCreate ?
+      <p className="rounded-lg border border-dashed bg-amber-50 p-4 text-sm text-amber-900">
           Create a speaker profile before adding an episode profile.
-        </p>
-      ) : null}
+        </p> :
+      null}
 
-      {sortedProfiles.length === 0 ? (
-        <div className="rounded-lg border border-dashed bg-muted/30 p-10 text-center text-sm text-muted-foreground">
+      {sortedProfiles.length === 0 ?
+      <div className="rounded-lg border border-dashed bg-muted/30 p-10 text-center text-sm text-muted-foreground">
           No episode profiles yet. Create one to kickstart podcast generation.
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {sortedProfiles.map((profile) => {
-            const speakerSummary = findSpeakerSummary(
-              speakerProfiles,
-              profile.speaker_config
-            )
+        </div> :
 
-            return (
-              <Card key={profile.id} className="shadow-sm">
+      <div className="space-y-4">
+          {sortedProfiles.map((profile) => {
+          const speakerSummary = findSpeakerSummary(
+            speakerProfiles,
+            profile.speaker_config
+          );
+
+          return (
+            <Card key={profile.id} className="shadow-sm">
                 <CardHeader className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
                   <div>
                     <CardTitle className="text-lg font-semibold">
@@ -114,33 +114,33 @@ export function EpisodeProfilesPanel({
                   </div>
                   <div className="flex items-center gap-1">
                     <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setEditProfile(profile)}
-                    >
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setEditProfile(profile)}>
+
                       <Edit3 className="mr-2 h-4 w-4" /> Edit
                     </Button>
                     <AlertDialog>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={(e) => e.stopPropagation()}
-                          >
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={(e) => e.stopPropagation()}>
+
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
-                          align="end"
-                          className="w-44"
-                          onClick={(e) => e.stopPropagation()}
-                        >
+                        align="end"
+                        className="w-44"
+                        onClick={(e) => e.stopPropagation()}>
+
                           <DropdownMenuItem
-                            onClick={() => duplicateProfile.mutate(profile.id)}
-                            disabled={duplicateProfile.isPending}
-                          >
+                          onClick={() => duplicateProfile.mutate(profile.id)}
+                          disabled={duplicateProfile.isPending}>
+
                             <Copy className="h-4 w-4 mr-2" />
                             Duplicate
                           </DropdownMenuItem>
@@ -164,9 +164,9 @@ export function EpisodeProfilesPanel({
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
-                            onClick={() => deleteProfile.mutate(profile.id)}
-                            disabled={deleteProfile.isPending}
-                          >
+                          onClick={() => deleteProfile.mutate(profile.id)}
+                          disabled={deleteProfile.isPending}>
+
                             {deleteProfile.isPending ? 'Deleting…' : 'Delete'}
                           </AlertDialogAction>
                         </AlertDialogFooter>
@@ -206,52 +206,52 @@ export function EpisodeProfilesPanel({
                       <div className="flex items-center gap-2 text-foreground">
                         <Users className="h-4 w-4" />
                         <span>{profile.speaker_config}</span>
-                        {speakerSummary ? (
-                          <Badge variant="outline" className="text-xs">
+                        {speakerSummary ?
+                      <Badge variant="outline" className="text-xs">
                             {speakerSummary.tts_provider} / {speakerSummary.tts_model}
-                          </Badge>
-                        ) : null}
+                          </Badge> :
+                      null}
                       </div>
                     </div>
                   </div>
 
-                  {profile.default_briefing ? (
-                    <div>
+                  {profile.default_briefing ?
+                <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                         Default briefing
                       </p>
                       <p className="mt-1 whitespace-pre-wrap text-muted-foreground">
                         {profile.default_briefing}
                       </p>
-                    </div>
-                  ) : null}
+                    </div> :
+                null}
                 </CardContent>
-              </Card>
-            )
-          })}
+              </Card>);
+
+        })}
         </div>
-      )}
+      }
 
       <EpisodeProfileFormDialog
         mode="create"
         open={createOpen}
         onOpenChange={setCreateOpen}
         speakerProfiles={speakerProfiles}
-        modelOptions={modelOptions}
-      />
+        modelOptions={modelOptions} />
+
 
       <EpisodeProfileFormDialog
         mode="edit"
         open={Boolean(editProfile)}
         onOpenChange={(open) => {
           if (!open) {
-            setEditProfile(null)
+            setEditProfile(null);
           }
         }}
         speakerProfiles={speakerProfiles}
         modelOptions={modelOptions}
-        initialData={editProfile ?? undefined}
-      />
-    </div>
-  )
+        initialData={editProfile ?? undefined} />
+
+    </div>);
+
 }

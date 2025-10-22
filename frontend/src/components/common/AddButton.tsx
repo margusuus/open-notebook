@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { Plus, FileText, Book, ChevronDown } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react';
+import { Plus, FileText, Book, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { AddSourceDialog } from '@/components/sources/AddSourceDialog'
+  DropdownMenuTrigger } from
+'@/components/ui/dropdown-menu';
+import { AddSourceDialog } from '@/components/sources/AddSourceDialog';
 
 interface AddButtonProps {
-  variant?: 'default' | 'outline' | 'ghost'
-  size?: 'sm' | 'default' | 'lg'
-  className?: string
-  iconOnly?: boolean
+  variant?: 'default' | 'outline' | 'ghost';
+  size?: 'sm' | 'default' | 'lg';
+  className?: string;
+  iconOnly?: boolean;
 }
 
 export function AddButton({
@@ -24,16 +24,16 @@ export function AddButton({
   className,
   iconOnly = false
 }: AddButtonProps) {
-  const [sourceDialogOpen, setSourceDialogOpen] = useState(false)
+  const [sourceDialogOpen, setSourceDialogOpen] = useState(false);
 
   const handleAddSource = () => {
-    setSourceDialogOpen(true)
-  }
+    setSourceDialogOpen(true);
+  };
 
   const handleAddNotebook = () => {
-    // TODO: Implement notebook creation when ready
-  }
 
+    // TODO: Implement notebook creation when ready
+  };
   if (iconOnly) {
     return (
       <>
@@ -42,8 +42,8 @@ export function AddButton({
             <Button
               variant={variant}
               size={size}
-              className={className}
-            >
+              className={className}>
+
               <Plus className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -61,10 +61,10 @@ export function AddButton({
 
         <AddSourceDialog
           open={sourceDialogOpen}
-          onOpenChange={setSourceDialogOpen}
-        />
-      </>
-    )
+          onOpenChange={setSourceDialogOpen} />
+
+      </>);
+
   }
 
   return (
@@ -74,8 +74,8 @@ export function AddButton({
           <Button
             variant={variant}
             size={size}
-            className={className}
-          >
+            className={className}>
+
             <Plus className="h-4 w-4 mr-2" />
             Add
             <ChevronDown className="h-3 w-3 ml-auto" />
@@ -95,8 +95,8 @@ export function AddButton({
 
       <AddSourceDialog
         open={sourceDialogOpen}
-        onOpenChange={setSourceDialogOpen}
-      />
-    </>
-  )
+        onOpenChange={setSourceDialogOpen} />
+
+    </>);
+
 }

@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import { EyeOff, Lightbulb, FileText } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { EyeOff, Lightbulb, FileText } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { cn } from '@/lib/utils'
-import { ContextMode } from '@/app/(dashboard)/notebooks/[id]/page'
+  TooltipTrigger } from
+'@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
+import { ContextMode } from '@/app/(dashboard)/notebooks/[id]/page';
 
 interface ContextToggleProps {
-  mode: ContextMode
-  hasInsights?: boolean // For sources - determines if 'insights' mode is available
-  onChange: (mode: ContextMode) => void
-  className?: string
+  mode: ContextMode;
+  hasInsights?: boolean; // For sources - determines if 'insights' mode is available
+  onChange: (mode: ContextMode) => void;
+  className?: string;
 }
 
 const MODE_CONFIG = {
@@ -37,25 +37,25 @@ const MODE_CONFIG = {
     color: 'text-primary',
     bgColor: 'hover:bg-primary/10'
   }
-} as const
+} as const;
 
 export function ContextToggle({ mode, hasInsights = false, onChange, className }: ContextToggleProps) {
-  const config = MODE_CONFIG[mode]
-  const Icon = config.icon
+  const config = MODE_CONFIG[mode];
+  const Icon = config.icon;
 
   // Determine available modes based on whether item has insights
-  const availableModes: ContextMode[] = hasInsights
-    ? ['off', 'insights', 'full']
-    : ['off', 'full']
+  const availableModes: ContextMode[] = hasInsights ?
+  ['off', 'insights', 'full'] :
+  ['off', 'full'];
 
   const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation() // Prevent card click
+    e.stopPropagation(); // Prevent card click
 
     // Cycle to next mode
-    const currentIndex = availableModes.indexOf(mode)
-    const nextIndex = (currentIndex + 1) % availableModes.length
-    onChange(availableModes[nextIndex])
-  }
+    const currentIndex = availableModes.indexOf(mode);
+    const nextIndex = (currentIndex + 1) % availableModes.length;
+    onChange(availableModes[nextIndex]);
+  };
 
   return (
     <TooltipProvider>
@@ -69,8 +69,8 @@ export function ContextToggle({ mode, hasInsights = false, onChange, className }
               config.bgColor,
               className
             )}
-            onClick={handleClick}
-          >
+            onClick={handleClick}>
+
             <Icon className={cn('h-4 w-4', config.color)} />
           </Button>
         </TooltipTrigger>
@@ -81,6 +81,6 @@ export function ContextToggle({ mode, hasInsights = false, onChange, className }
           </p>
         </TooltipContent>
       </Tooltip>
-    </TooltipProvider>
-  )
+    </TooltipProvider>);
+
 }

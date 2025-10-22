@@ -4,10 +4,10 @@
  * not returned by the Python backend.
  */
 export interface BackendConfigResponse {
-  version: string
-  latestVersion?: string | null
-  hasUpdate?: boolean
-  dbStatus?: "online" | "offline"
+  version: string;
+  latestVersion?: string | null;
+  hasUpdate?: boolean;
+  dbStatus?: "online" | "offline";
 }
 
 /**
@@ -15,23 +15,23 @@ export interface BackendConfigResponse {
  * This is constructed from the backend response + runtime-config.
  */
 export interface AppConfig {
-  apiUrl: string
-  version: string
-  buildTime: string
-  latestVersion?: string | null
-  hasUpdate?: boolean
-  dbStatus?: "online" | "offline"
+  apiUrl: string;
+  version: string;
+  buildTime: string;
+  latestVersion?: string | null;
+  hasUpdate?: boolean;
+  dbStatus?: "online" | "offline";
 }
 
 /**
  * Connection error state
  */
 export interface ConnectionError {
-  type: "api-unreachable" | "database-offline"
+  type: "api-unreachable" | "database-offline";
   details?: {
-    message?: string
-    technicalMessage?: string
-    stack?: string
-    attemptedUrl?: string
-  }
+    message?: string;
+    technicalMessage?: string;
+    stack?: string;
+    attemptedUrl?: string;
+  };
 }

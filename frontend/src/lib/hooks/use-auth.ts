@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { useAuthStore } from '@/lib/stores/auth-store'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useAuthStore } from '@/lib/stores/auth-store';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export function useAuth() {
-  const router = useRouter()
+  const router = useRouter();
   const {
     isAuthenticated,
     isLoading,
@@ -16,7 +16,7 @@ export function useAuth() {
     error,
     hasHydrated,
     authRequired
-  } = useAuthStore()
+  } = useAuthStore();
 
   useEffect(() => {
     // Only check auth after the store has hydrated from localStorage
@@ -26,37 +26,37 @@ export function useAuth() {
         checkAuthRequired().then((required) => {
           // If auth is required, check if we have valid credentials
           if (required) {
-            checkAuth()
+            checkAuth();
           }
-        })
+        });
       } else if (authRequired) {
         // Auth is required, check credentials
-        checkAuth()
+        checkAuth();
       }
       // If authRequired === false, we're already authenticated (set in checkAuthRequired)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasHydrated, authRequired])
+  }, [hasHydrated, authRequired]);
 
   const handleLogin = async (password: string) => {
-    const success = await login(password)
+    const success = await login(password);
     if (success) {
       // Check if there's a stored redirect path
-      const redirectPath = sessionStorage.getItem('redirectAfterLogin')
+      const redirectPath = sessionStorage.getItem('redirectAfterLogin');
       if (redirectPath) {
-        sessionStorage.removeItem('redirectAfterLogin')
-        router.push(redirectPath)
+        sessionStorage.removeItem('redirectAfterLogin');
+        router.push(redirectPath);
       } else {
-        router.push('/notebooks')
+        router.push('/notebooks');
       }
     }
-    return success
-  }
+    return success;
+  };
 
   const handleLogout = () => {
-    logout()
-    router.push('/login')
-  }
+    logout();
+    router.push('/login');
+  };
 
   return {
     isAuthenticated,
@@ -64,5 +64,5 @@ export function useAuth() {
     error,
     login: handleLogin,
     logout: handleLogout
-  }
+  };
 }

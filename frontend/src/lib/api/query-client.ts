@@ -1,4 +1,4 @@
-import { QueryClient } from '@tanstack/react-query'
+import { QueryClient } from '@tanstack/react-query';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -6,13 +6,13 @@ export const queryClient = new QueryClient({
       staleTime: 5 * 60 * 1000, // 5 minutes
       gcTime: 10 * 60 * 1000, // 10 minutes
       retry: 2,
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus: false
     },
     mutations: {
-      retry: 1,
-    },
-  },
-})
+      retry: 1
+    }
+  }
+});
 
 export const QUERY_KEYS = {
   notebooks: ['notebooks'] as const,
@@ -29,5 +29,5 @@ export const QUERY_KEYS = {
   podcastEpisodes: ['podcasts', 'episodes'] as const,
   podcastEpisode: (episodeId: string) => ['podcasts', 'episodes', episodeId] as const,
   episodeProfiles: ['podcasts', 'episode-profiles'] as const,
-  speakerProfiles: ['podcasts', 'speaker-profiles'] as const,
-}
+  speakerProfiles: ['podcasts', 'speaker-profiles'] as const
+};

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 
 /**
  * Runtime Configuration Endpoint
@@ -15,12 +15,12 @@ import { NextRequest, NextResponse } from 'next/server'
  */
 export async function GET(request: NextRequest) {
   // Priority 1: Check if API_URL is explicitly set
-  const envApiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
+  const envApiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
 
   if (envApiUrl) {
     return NextResponse.json({
-      apiUrl: envApiUrl,
-    })
+      apiUrl: envApiUrl
+    });
   }
 
   // Priority 2: Auto-detect from request headers
@@ -28,32 +28,32 @@ export async function GET(request: NextRequest) {
     // Get the protocol (http or https)
     // Check X-Forwarded-Proto first (for reverse proxies), then fallback to request scheme
     const proto = request.headers.get('x-forwarded-proto') ||
-                  request.nextUrl.protocol.replace(':', '') ||
-                  'http'
+    request.nextUrl.protocol.replace(':', '') ||
+    'http';
 
     // Get the host header (includes port if non-standard)
-    const hostHeader = request.headers.get('host')
+    const hostHeader = request.headers.get('host');
 
     if (hostHeader) {
       // Extract just the hostname (remove port if present)
-      const hostname = hostHeader.split(':')[0]
+      const hostname = hostHeader.split(':')[0];
 
       // Construct the API URL with port 5055
-      const apiUrl = `${proto}://${hostname}:5055`
+      const apiUrl = `${proto}://${hostname}:5055`;
 
-      console.log(`[runtime-config] Auto-detected API URL: ${apiUrl} (proto=${proto}, host=${hostHeader})`)
+      console.log(`[runtime-config] Auto-detected API URL: ${apiUrl} (proto=${proto}, host=${hostHeader})`);
 
       return NextResponse.json({
-        apiUrl,
-      })
+        apiUrl
+      });
     }
   } catch (error) {
-    console.error('[runtime-config] Auto-detection failed:', error)
+    console.error('[runtime-config] Auto-detection failed:', error);
   }
 
   // Priority 3: Fallback to localhost
-  console.log('[runtime-config] Using fallback: http://localhost:5055')
+  console.log('[runtime-config] Using fallback: http://localhost:5055');
   return NextResponse.json({
-    apiUrl: 'http://localhost:5055',
-  })
+    apiUrl: 'http://localhost:5055'
+  });
 }

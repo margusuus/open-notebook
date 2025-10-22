@@ -1,7 +1,7 @@
-import { useNavigationStore } from '@/lib/stores/navigation-store'
+import { useNavigationStore } from '@/lib/stores/navigation-store';
 
 export function useNavigation() {
-  const store = useNavigationStore()
+  const store = useNavigationStore();
 
   return {
     setReturnTo: store.setReturnTo,
@@ -9,5 +9,5 @@ export function useNavigation() {
     getReturnPath: store.getReturnPath,
     getReturnLabel: store.getReturnLabel,
     returnTo: store.returnTo
-  }
+  };
 }

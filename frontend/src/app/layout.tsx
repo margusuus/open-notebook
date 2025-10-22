@@ -12,14 +12,14 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Open Notebook",
-  description: "Privacy-focused research and knowledge management",
+  description: "Privacy-focused research and knowledge management"
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  children
+
+
+}: Readonly<{children: React.ReactNode;}>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -37,6 +37,6 @@ export default function RootLayout({
           </ThemeProvider>
         </ErrorBoundary>
       </body>
-    </html>
-  );
+    </html>);
+
 }

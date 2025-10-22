@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   AlertDialog,
@@ -8,19 +8,19 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
-import { LoadingSpinner } from '@/components/common/LoadingSpinner'
+  AlertDialogTitle } from
+'@/components/ui/alert-dialog';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 
 interface ConfirmDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  title: string
-  description: string
-  confirmText?: string
-  confirmVariant?: 'default' | 'destructive'
-  onConfirm: () => void
-  isLoading?: boolean
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title: string;
+  description: string;
+  confirmText?: string;
+  confirmVariant?: 'default' | 'destructive';
+  onConfirm: () => void;
+  isLoading?: boolean;
 }
 
 export function ConfirmDialog({
@@ -31,7 +31,7 @@ export function ConfirmDialog({
   confirmText = 'Confirm',
   confirmVariant = 'default',
   onConfirm,
-  isLoading = false,
+  isLoading = false
 }: ConfirmDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
@@ -45,19 +45,19 @@ export function ConfirmDialog({
           <AlertDialogAction
             onClick={onConfirm}
             disabled={isLoading}
-            className={confirmVariant === 'destructive' ? 'bg-red-600 hover:bg-red-700' : ''}
-          >
-            {isLoading ? (
-              <>
+            className={confirmVariant === 'destructive' ? 'bg-red-600 hover:bg-red-700' : ''}>
+
+            {isLoading ?
+            <>
                 <LoadingSpinner size="sm" className="mr-2" />
                 {confirmText}
-              </>
-            ) : (
-              confirmText
-            )}
+              </> :
+
+            confirmText
+            }
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
-    </AlertDialog>
-  )
+    </AlertDialog>);
+
 }

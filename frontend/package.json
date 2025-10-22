@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:dev": "next build",
     "start": "next start -p ${PORT:-8502}",
     "lint": "next lint"
   },

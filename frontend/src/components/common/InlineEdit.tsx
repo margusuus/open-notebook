@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
-import { useState, useRef, useEffect, type RefObject } from 'react'
-import { cn } from '@/lib/utils'
+import { useState, useRef, useEffect, type RefObject } from 'react';
+import { cn } from '@/lib/utils';
 
 interface InlineEditProps {
-  value: string
-  onSave: (value: string) => void | Promise<void>
-  className?: string
-  inputClassName?: string
-  placeholder?: string
-  multiline?: boolean
-  emptyText?: string
+  value: string;
+  onSave: (value: string) => void | Promise<void>;
+  className?: string;
+  inputClassName?: string;
+  placeholder?: string;
+  multiline?: boolean;
+  emptyText?: string;
 }
 
 export function InlineEdit({
@@ -22,54 +22,54 @@ export function InlineEdit({
   multiline = false,
   emptyText = 'Click to edit'
 }: InlineEditProps) {
-  const [isEditing, setIsEditing] = useState(false)
-  const [editValue, setEditValue] = useState(value)
-  const [isSaving, setIsSaving] = useState(false)
-  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(value);
+  const [isSaving, setIsSaving] = useState(false);
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
-      inputRef.current.focus()
-      inputRef.current.select()
+      inputRef.current.focus();
+      inputRef.current.select();
     }
-  }, [isEditing])
+  }, [isEditing]);
 
   useEffect(() => {
-    setEditValue(value)
-  }, [value])
+    setEditValue(value);
+  }, [value]);
 
   const handleSave = async () => {
     if (editValue.trim() === value.trim()) {
-      setIsEditing(false)
-      return
+      setIsEditing(false);
+      return;
     }
 
-    setIsSaving(true)
+    setIsSaving(true);
     try {
-      await onSave(editValue.trim())
-      setIsEditing(false)
+      await onSave(editValue.trim());
+      setIsEditing(false);
     } catch {
       // Reset on error
-      setEditValue(value)
+      setEditValue(value);
     } finally {
-      setIsSaving(false)
+      setIsSaving(false);
     }
-  }
+  };
 
   const handleCancel = () => {
-    setEditValue(value)
-    setIsEditing(false)
-  }
+    setEditValue(value);
+    setIsEditing(false);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !multiline) {
-      e.preventDefault()
-      handleSave()
+      e.preventDefault();
+      handleSave();
     } else if (e.key === 'Escape') {
-      e.preventDefault()
-      handleCancel()
+      e.preventDefault();
+      handleCancel();
     }
-  }
+  };
 
   if (!isEditing) {
     return (
@@ -80,14 +80,14 @@ export function InlineEdit({
           className
         )}
         onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          setIsEditing(true)
-        }}
-      >
+          e.preventDefault();
+          e.stopPropagation();
+          setIsEditing(true);
+        }}>
+
         {value || <span className="text-muted-foreground">{emptyText}</span>}
-      </button>
-    )
+      </button>);
+
   }
 
   if (multiline) {
@@ -99,9 +99,9 @@ export function InlineEdit({
         onKeyDown={handleKeyDown}
         onBlur={() => {
           if (!isSaving && editValue.trim() !== value.trim()) {
-            handleSave()
+            handleSave();
           } else if (editValue.trim() === value.trim()) {
-            setIsEditing(false)
+            setIsEditing(false);
           }
         }}
         className={cn(
@@ -110,9 +110,9 @@ export function InlineEdit({
           inputClassName
         )}
         placeholder={placeholder}
-        disabled={isSaving}
-      />
-    )
+        disabled={isSaving} />);
+
+
   }
 
   return (
@@ -123,9 +123,9 @@ export function InlineEdit({
       onKeyDown={handleKeyDown}
       onBlur={() => {
         if (!isSaving && editValue.trim() !== value.trim()) {
-          handleSave()
+          handleSave();
         } else if (editValue.trim() === value.trim()) {
-          setIsEditing(false)
+          setIsEditing(false);
         }
       }}
       className={cn(
@@ -133,7 +133,7 @@ export function InlineEdit({
         inputClassName
       )}
       placeholder={placeholder}
-      disabled={isSaving}
-    />
-  )
+      disabled={isSaving} />);
+
+
 }
