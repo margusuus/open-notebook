@@ -87,6 +87,8 @@ export const useNavigationStore = create<NavigationState>()(
 
 
 
+
+
             // Silently fail if sessionStorage is not available
           }}, removeItem: (name: string) => {try {sessionStorage.removeItem(name);} catch {
 
