@@ -1,15 +1,5 @@
-// This is a Next.js project, not a Vite project
-// The build system should use 'next build' instead of 'vite build'
-import { defineConfig } from 'vite';
+// This file is not used - this is a Next.js project
+// The build system uses 'next build' from the frontend directory
+// This file is kept for backward compatibility but serves no purpose
 
-export default defineConfig({
-  build: {
-    outDir: 'frontend/.next',
-  },
-  // Redirect to indicate this is misconfigured
-  server: {
-    proxy: {
-      '/': 'http://localhost:3000'
-    }
-  }
-});
+export default {};

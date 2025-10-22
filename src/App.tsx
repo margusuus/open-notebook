@@ -1,13 +1,14 @@
-// This file exists only to satisfy Vite's entry point requirements
-// This is actually a Next.js project and should use 'next build'
+// This file is not used in the build process
+// This is a Next.js project, not a Vite/React SPA
+// The actual application entry point is frontend/src/app/layout.tsx
 
 export default function App() {
   return (
     <div style={{ padding: '2rem', fontFamily: 'system-ui' }}>
-      <h1>Configuration Error</h1>
-      <p>This is a Next.js application, not a Vite/React app.</p>
-      <p>Please update the build configuration to use 'next build' instead of 'vite build'.</p>
-      <p>The actual Next.js application is located in the <code>/frontend</code> directory.</p>
+      <h1>Build Configuration Note</h1>
+      <p>This file is not used. This is a Next.js application.</p>
+      <p>The actual application is located in the <code>frontend/</code> directory.</p>
+      <p>Build command: <code>npm run build</code> (which runs <code>cd frontend && npm run build</code>)</p>
     </div>
   );
 }

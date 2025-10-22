@@ -32,10 +32,10 @@ export function AddButton({
 
   const handleAddNotebook = () => {
 
+
+
     // TODO: Implement notebook creation when ready
-  };
-  if (iconOnly) {
-    return (
+  };if (iconOnly) {return (
       <>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "dev": "cd frontend \u0026\u0026 npm run dev",
+    "build": "cd frontend \u0026\u0026 npm run build",
+    "build:dev": "cd frontend \u0026\u0026 npm run build:dev",
     "start": "cd frontend \u0026\u0026 npm run start",
-    "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}' --quiet",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json",
-    "precheck": "pnpm typecheck && pnpm lint",
-    "fix": "eslint 'src/**/*.{ts,tsx,js,jsx}' --fix --quiet",
-    "preview": "vite preview"
+    "lint": "cd frontend \u0026\u0026 npm run lint",
+    "typecheck": "cd frontend \u0026\u0026 npx tsc --noEmit",
+    "precheck": "npm run typecheck && npm run lint",
+    "fix": "cd frontend \u0026\u0026 npx eslint --fix --quiet",
+    "preview": "cd frontend \u0026\u0026 npm run start"
   },
   "workspaces": [
     "frontend"
